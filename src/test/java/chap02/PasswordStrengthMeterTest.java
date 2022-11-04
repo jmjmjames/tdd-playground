@@ -2,6 +2,7 @@ package chap02;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PasswordStrengthMeterTest {
@@ -25,7 +26,7 @@ public class PasswordStrengthMeterTest {
      */
     @Test
     void meetsAllCriteria_Then_Strong() {
-        assertStrength("abcd12!@", PasswordStrength.STRONG);
+        assertStrength("abCD12!@", PasswordStrength.STRONG);
         assertStrength("abc1!Add", PasswordStrength.STRONG);
     }
 
@@ -51,5 +52,11 @@ public class PasswordStrengthMeterTest {
     @Test
     void meetsOtherCriteria_except_for_Uppercase_Then_Normal() {
         assertStrength("ab12!@df", PasswordStrength.NORMAL);
+    }
+
+    @Test
+    @DisplayName("길이가 8글자 이상인 조건만 충족하는 경우")
+    void meetsOnlyLengthCriteria_Then_Weak() {
+        assertStrength("abcdefghi", PasswordStrength.WEAK);
     }
 }
