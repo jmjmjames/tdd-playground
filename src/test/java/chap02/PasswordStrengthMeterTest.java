@@ -1,9 +1,18 @@
 package chap02;
 
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 public class PasswordStrengthMeterTest {
+
+    private final PasswordStrengthMeter passwordStrengthMeter = new PasswordStrengthMeter();
+
+    private void assertStrength(String password, PasswordStrength expStr) {
+        PasswordStrength result = passwordStrengthMeter.meter(password);
+        assertThat(result).isEqualTo(expStr);
+    }
+
     /**
      * <p>아래의 세 가지 규칙을 모두 충족하면 암호는 강함.</p>
      * <p>2개의 규칙을 충족하면 암호는 보통.</p>
@@ -16,7 +25,19 @@ public class PasswordStrengthMeterTest {
      */
     @Test
     void meetsAllCriteria_Then_Strong() {
-        PasswordStrength result = PasswordStrengthMeter.meter("abcd12!@");
-        Assertions.assertThat(result).isEqualTo(PasswordStrength.STRONG);
+        assertStrength("abcd12!@", PasswordStrength.STRONG);
+        assertStrength("abc1!Add", PasswordStrength.STRONG);
+    }
+
+    @Test
+    void meetsOtherCriteria_except_for_Length_Then_Normal() {
+        PasswordStrength result = passwordStrengthMeter.meter("ab12!@A");
+        assertThat(result).isEqualTo(PasswordStrength.NORMAL);
+    }
+
+    @Test
+    void meetsOtherCriteria_except_for_number_Then_Normal() {
+        PasswordStrength result = passwordStrengthMeter.meter("ab!@@ABqw");
+        assertThat(result).isEqualTo(PasswordStrength.NORMAL);
     }
 }
