@@ -1,7 +1,8 @@
 package chap03;
 
+import static org.assertj.core.api.Assertions.*;
+
 import java.time.LocalDate;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,13 @@ public class ExpiryDateCalculatorTest {
         ExpiryDateCalculator calculator = new ExpiryDateCalculator();
         LocalDate expiryDate = calculator.calculateExpiryDate(billingDate, payAmount);
 
-        Assertions.assertThat(expiryDate).isEqualTo(LocalDate.of(2022, 12, 4));
+        assertThat(expiryDate).isEqualTo(LocalDate.of(2022, 12, 4));
+
+        LocalDate billingDate2 = LocalDate.of(2022, 11, 11);
+        int payAmount2 = 10_000;
+
+        LocalDate expiryDate2 = calculator.calculateExpiryDate(billingDate2, payAmount2);
+        assertThat(expiryDate2).isEqualTo(LocalDate.of(2022, 12, 11));
     }
 
 

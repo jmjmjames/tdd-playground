@@ -4,6 +4,6 @@ import java.time.LocalDate;
 
 public class ExpiryDateCalculator {
     public LocalDate calculateExpiryDate(LocalDate billingDate, int payAmount) {
-        return LocalDate.of(2022, 12, 4);
+        return billingDate.plusMonths(1);
     }
 }
