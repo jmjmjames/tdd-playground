@@ -3,17 +3,26 @@ package chap03;
 import java.time.LocalDate;
 
 public class PayData {
+
+    private LocalDate firstBillingDate;
     private LocalDate billingDate;
     private int amount;
 
     private PayData() {
-
     }
 
-    public PayData(LocalDate billingDate, int amount) {
-        this.billingDate = billingDate;
-        this.amount = amount;
+    public LocalDate getFirstBillingDate() {
+        return firstBillingDate;
     }
+
+    public LocalDate getBillingDate() {
+        return billingDate;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
 
     public static Builder builder() {
         return new Builder();
@@ -21,6 +30,11 @@ public class PayData {
 
     public static class Builder {
         private PayData payData = new PayData();
+
+        public Builder firstBillingDate(LocalDate firstBillingDate) {
+            payData.firstBillingDate = firstBillingDate;
+            return this;
+        }
 
         public Builder billingDate(LocalDate billingDate) {
             payData.billingDate = billingDate;
@@ -35,13 +49,5 @@ public class PayData {
         public PayData build() {
             return payData;
         }
-    }
-
-    public LocalDate getBillingDate() {
-        return billingDate;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 }
