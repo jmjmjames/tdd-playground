@@ -8,7 +8,7 @@ public class PasswordStrengthMeter {
             return PasswordStrength.INVALID;
         }
 
-        boolean lengthEnough = password.length() > 8;
+        boolean lengthEnough = password.length() >= 8;
         boolean containsNum = meetsContainingNumberCriteria(password);
         boolean containsUppercase = meetsContainingUppercaseCriteria(password);
 
@@ -16,6 +16,9 @@ public class PasswordStrengthMeter {
             return PasswordStrength.WEAK;
         }
         if (!lengthEnough && containsNum && !containsUppercase) {
+            return PasswordStrength.WEAK;
+        }
+        if (!lengthEnough && !containsNum && containsUppercase) {
             return PasswordStrength.WEAK;
         }
 

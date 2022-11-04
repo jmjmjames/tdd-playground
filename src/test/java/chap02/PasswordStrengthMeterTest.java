@@ -50,6 +50,7 @@ public class PasswordStrengthMeterTest {
     }
 
     @Test
+    @DisplayName("대문자를 포함하지 않고 나머지 조건을 충족하는 경우")
     void meetsOtherCriteria_except_for_Uppercase_Then_Normal() {
         assertStrength("ab12!@df", PasswordStrength.NORMAL);
     }
@@ -65,4 +66,11 @@ public class PasswordStrengthMeterTest {
     void meetsOnlyNumCriteria_Then_Weak() {
         assertStrength("1234", PasswordStrength.WEAK);
     }
+
+    @Test
+    @DisplayName("대문자 포함 조건만 충족하는 경우")
+    void meetsOnlyUpperCriteria_Then_Weak() {
+        assertStrength("ABCD", PasswordStrength.WEAK);
+    }
+
 }
