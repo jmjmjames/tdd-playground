@@ -1,5 +1,6 @@
 package chap02;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class PasswordStrengthMeterTest {
@@ -14,7 +15,8 @@ public class PasswordStrengthMeterTest {
      * </ul>
      */
     @Test
-    void name() {
-
+    void meetsAllCriteria_Then_Strong() {
+        PasswordStrength result = PasswordStrengthMeter.meter("abcd12!@");
+        Assertions.assertThat(result).isEqualTo(PasswordStrength.STRONG);
     }
 }
