@@ -1,6 +1,5 @@
 package chap02;
 
-import java.util.OptionalInt;
 
 public class PasswordStrengthMeter {
     public PasswordStrength meter(String password) {
@@ -8,30 +7,25 @@ public class PasswordStrengthMeter {
             return PasswordStrength.INVALID;
         }
 
+        int metCounts = 0;
         boolean lengthEnough = password.length() >= 8;
+        if (lengthEnough) {
+            metCounts++;
+        }
         boolean containsNum = meetsContainingNumberCriteria(password);
+        if (containsNum) {
+            metCounts++;
+        }
         boolean containsUppercase = meetsContainingUppercaseCriteria(password);
+        if (containsUppercase) {
+            metCounts++;
+        }
 
-        if (lengthEnough && !containsNum && !containsUppercase) {
-            return PasswordStrength.WEAK;
-        }
-        if (!lengthEnough && containsNum && !containsUppercase) {
-            return PasswordStrength.WEAK;
-        }
-        if (!lengthEnough && !containsNum && containsUppercase) {
+        if (metCounts == 1) {
             return PasswordStrength.WEAK;
         }
 
-        if (!lengthEnough) {
-            return PasswordStrength.NORMAL;
-        }
-
-        if (!containsNum) {
-            return PasswordStrength.NORMAL;
-        }
-
-
-        if (!containsUppercase) {
+        if (metCounts == 2) {
             return PasswordStrength.NORMAL;
         }
 
