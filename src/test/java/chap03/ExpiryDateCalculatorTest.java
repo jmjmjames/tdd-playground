@@ -78,6 +78,42 @@ public class ExpiryDateCalculatorTest {
         assertExpiryDate(payData3, LocalDate.of(2022, 7, 31));
     }
 
+    @Test
+    void 이만원_이상_납부하면_비례해서_만료일_계산() {
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2022, 11, 5))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2023, 1, 5));
+    }
+
+    @Test
+    void 첫_납부일과_만료일의_일자가_다를때_2만원_이상_납부하면_첫_납부일_기준으로_다음_만료일_정함() {
+        assertExpiryDate(
+                PayData.builder()
+                        .firstBillingDate(LocalDate.of(2022, 1, 31))
+                        .billingDate(LocalDate.of(2022, 2, 28))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2022, 4, 30));
+
+        assertExpiryDate(
+                PayData.builder()
+                        .firstBillingDate(LocalDate.of(2022, 1, 31))
+                        .billingDate(LocalDate.of(2022, 2, 28))
+                        .payAmount(40_000)
+                        .build(),
+                LocalDate.of(2022, 6, 30));
+
+        assertExpiryDate(
+                PayData.builder()
+                        .firstBillingDate(LocalDate.of(2022, 3, 31))
+                        .billingDate(LocalDate.of(2022, 4, 30))
+                        .payAmount(30_000)
+                        .build(),
+                LocalDate.of(2022, 7, 31));
+    }
 
     private void assertExpiryDate(PayData payData, LocalDate expectedExpiryDate) {
         ExpiryDateCalculator calculator = new ExpiryDateCalculator();
