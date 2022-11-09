@@ -1,6 +1,6 @@
 package chap07.autodebit.repository;
 
-import chap07.autodebit.AutoDebitInfo;
+import chap07.autodebit.dto.AutoDebitInfo;
 import java.util.HashMap;
 import java.util.Map;
 
