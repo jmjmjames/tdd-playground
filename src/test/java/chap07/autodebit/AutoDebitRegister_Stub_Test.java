@@ -1,6 +1,9 @@
 package chap07.autodebit;
 
 
+import chap07.autodebit.domain.AutoDebitRegister;
+import chap07.autodebit.dto.AutoDebitReq;
+import chap07.autodebit.dto.RegisterResult;
 import chap07.autodebit.repository.StubAutoDebitInfoRepository;
 import chap07.autodebit.validator.StubCardNumberValidator;
 import org.assertj.core.api.Assertions;
