@@ -1,5 +1,9 @@
-package chap07.autodebit;
+package chap07.autodebit.domain;
 
+import chap07.autodebit.CardValidity;
+import chap07.autodebit.dto.AutoDebitInfo;
+import chap07.autodebit.dto.AutoDebitReq;
+import chap07.autodebit.dto.RegisterResult;
 import chap07.autodebit.repository.AutoDebitInfoRepository;
 import chap07.autodebit.validator.CardNumberValidator;
 import java.time.LocalDateTime;
