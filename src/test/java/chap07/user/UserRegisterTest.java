@@ -3,9 +3,12 @@ package chap07.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chap07.user.domain.notificaiton.EmailNotifier;
+import chap07.user.domain.notificaiton.SpyEmailNotifier;
 import chap07.user.domain.registration.MemoryUserRepository;
 import chap07.user.domain.registration.User;
 import chap07.user.domain.registration.UserRegister;
+import chap07.user.domain.registration.UserRepository;
 import chap07.user.domain.validator.StubWeakPasswordChecker;
 import chap07.user.exception.DupIdException;
 import chap07.user.exception.WeakPasswordException;
@@ -16,11 +19,12 @@ import org.junit.jupiter.api.Test;
 public class UserRegisterTest {
     private UserRegister userRegister;
     private final StubWeakPasswordChecker stubWeakPasswordChecker = new StubWeakPasswordChecker();
-    private final MemoryUserRepository fakeRepository = new MemoryUserRepository();
+    private final UserRepository fakeRepository = new MemoryUserRepository();
+    private final SpyEmailNotifier spyEmailNotifier = new SpyEmailNotifier();
 
     @BeforeEach
     void setUp() {
-        userRegister = new UserRegister(stubWeakPasswordChecker, fakeRepository);
+        userRegister = new UserRegister(stubWeakPasswordChecker, fakeRepository, spyEmailNotifier);
     }
 
     @DisplayName("[예외] 약한 암호면 가입이 실패")
@@ -48,5 +52,14 @@ public class UserRegisterTest {
         User findUser = fakeRepository.findById("id");
         assertThat(findUser.getId()).isEqualTo("id");
         assertThat(findUser.getEmail()).isEqualTo("email");
+    }
+
+    @DisplayName("[정상] 가입하면 메일을 전송함")
+    @Test
+    void whenRegisterThenSendMail() {
+        userRegister.register("id", "pwd", "email@email.com");
+
+        assertThat(spyEmailNotifier.isCalled()).isTrue();
+        assertThat("email@email.com").isEqualTo(spyEmailNotifier.getEmail());
     }
 }
