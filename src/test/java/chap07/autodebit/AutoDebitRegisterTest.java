@@ -3,6 +3,9 @@ package chap07.autodebit;
 import static chap07.autodebit.CardValidity.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import chap07.autodebit.domain.AutoDebitRegister;
+import chap07.autodebit.dto.AutoDebitReq;
+import chap07.autodebit.dto.RegisterResult;
 import chap07.autodebit.repository.AutoDebitInfoRepository;
 import chap07.autodebit.repository.JpaAutoDebitInfoRepository;
 import chap07.autodebit.validator.CardNumberValidator;
